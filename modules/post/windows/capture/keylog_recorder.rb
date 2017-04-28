@@ -149,7 +149,7 @@ class MetasploitModule < Msf::Post
   # It will make sure that the process has a visible user meaning that the session has rights to that process.
   # Note: "target_pid = session.sys.process[proc_name]" will not work when "include Msf::Post::Windows::Priv" is in the module.
   #
-  # @return [Fixnum] the PID if one is found
+  # @return [Integer] the PID if one is found
   # @return [NilClass] if no PID was found
   def get_pid(proc_name)
     processes = client.sys.process.get_processes
@@ -243,7 +243,7 @@ class MetasploitModule < Msf::Post
   #
   # @return [void] A useful return value is not expected here
   def write_keylog_data
-    output = session.ui.keyscan_extract(session.ui.keyscan_dump)
+    output = session.ui.keyscan_dump
 
     if not output.empty?
       print_good("Keystrokes captured #{output}") if datastore['ShowKeystrokes']

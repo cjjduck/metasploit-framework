@@ -65,9 +65,9 @@ Gem::Specification.new do |spec|
   # are needed when there's no database
   spec.add_runtime_dependency 'metasploit-model'
   # Needed for Meterpreter
-  spec.add_runtime_dependency 'metasploit-payloads', '1.2.1'
+  spec.add_runtime_dependency 'metasploit-payloads', '1.2.24'
   # Needed for the next-generation POSIX Meterpreter
-  spec.add_runtime_dependency 'metasploit_payloads-mettle', '0.1.2'
+  spec.add_runtime_dependency 'metasploit_payloads-mettle', '0.1.9'
   # Needed by msfgui and other rpc components
   spec.add_runtime_dependency 'msgpack'
   # get list of network interfaces, like eth* from OS.
@@ -77,7 +77,7 @@ Gem::Specification.new do |spec|
   # Needed by anemone crawler
   spec.add_runtime_dependency 'nokogiri'
   # Needed by db.rb and Msf::Exploit::Capture
-  spec.add_runtime_dependency 'packetfu'
+  spec.add_runtime_dependency 'packetfu', '1.1.13.pre'
   # For sniffer and raw socket modules
   spec.add_runtime_dependency 'pcaprub'
   # Needed for module caching in Mdm::ModuleDetails
@@ -101,11 +101,16 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'bit-struct'
   # Library for interpreting Windows error codes and strings
   spec.add_runtime_dependency 'windows_error'
+  # This used to be depended on by nokogiri, depended on by wmap
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.3.0')
+    spec.add_runtime_dependency 'xmlrpc'
+  end
 
   #
   # Protocol Libraries
   #
   spec.add_runtime_dependency 'net-ssh'
+  spec.add_runtime_dependency 'ruby_smb'
 
   #
   # REX Libraries
@@ -128,7 +133,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rex-struct2'
   # Library which contains architecture specific information such as registers, opcodes,
   # and stack manipulation routines.
-  spec.add_runtime_dependency 'rex-arch', '0.1.2'
+  spec.add_runtime_dependency 'rex-arch', '0.1.4'
   # Library for working with OLE.
   spec.add_runtime_dependency 'rex-ole'
   # Library for creating and/or parsing MIME messages.
@@ -147,15 +152,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rex-encoder'
   # Library for exploit development helpers
   spec.add_runtime_dependency 'rex-exploitation'
-
-  # rb-readline doesn't work with Ruby Installer due to error with Fiddle:
-  #   NoMethodError undefined method `dlopen' for Fiddle:Module
-  unless Gem.win_platform?
-    # Command line editing, history, and tab completion in msfconsole
-    # Use the Rapid7 fork until the official gem catches up
-    spec.add_runtime_dependency 'rb-readline-r7'
-  end
-
+  # Command line editing, history, and tab completion in msfconsole
+  spec.add_runtime_dependency 'rb-readline'
   # Needed by anemone crawler
   spec.add_runtime_dependency 'robots'
   # Needed by some modules
@@ -170,4 +168,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'openvas-omp'
   # Needed by metasploit nessus bridge
   spec.add_runtime_dependency 'nessus_rest'
+  # Nexpose Gem
+  spec.add_runtime_dependency 'nexpose'
 end
